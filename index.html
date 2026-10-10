@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Touch Grass — AI Nature Companion</title>
+
+<style>
+:root {
+  --ink: #17352b;
+  --muted: #63766b;
+  --leaf: #2e684b;
+  --lime: #d9efad;
+  --cream: #f7f6ef;
+  --card: #fffef9;
+  --line: #e1e7d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Inter, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 6%;
+  border-bottom: 1px solid var(--line);
+  background: #fbfaf5;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 850;
+  font-size: 1.2rem;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  background: var(--leaf);
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+}
+
+.pill {
+  border: 1px solid #c9d8c4;
+  color: var(--leaf);
+  padding: 7px 12px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 32px 22px 60px;
+}
+
+.hero {
+  background: #214d39;
+  color: white;
+  border-radius: 25px;
+  padding: clamp(28px, 5vw, 60px);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 25px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--lime);
+}
+
+h1 {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  margin: 15px 0;
+}
+
+h1 em {
+  font-family: Georgia, serif;
+  font-weight: 500;
+  color: var(--lime);
+}
+
+.hero p {
+  max-width: 540px;
+  color: #e0ebdf;
+}
+
+.hero-art {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  font-size: 6rem;
+}
+
+.sun {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #e3efb2;
+  right: 10%;
+  top: 0;
+}
+
+.hill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 130px;
+  background: #79a16e;
+  border-radius: 60% 60% 0 0;
+}
+
+.hill.two {
+  background: #a8c28b;
+  width: 85%;
+  height: 90px;
+  left: 5%;
+}
+
+.tree {
+  position: absolute;
+  z-index: 2;
+  bottom: 35px;
+  right: 25%;
+}
+
+.bird {
+  position: absolute;
+  z-index: 3;
+  top: 30px;
+  left: 15%;
+  font-size: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 8px 25px #254a3010;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.number {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #e8f1df;
+  color: var(--leaf);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.drop {
+  border: 2px dashed #b9cbb6;
+  border-radius: 17px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px;
+  cursor: pointer;
+  background: #f8faf3;
+}
+
+.drop:hover {
+  background: #eff6e6;
+  border-color: var(--leaf);
+}
+
+.drop img {
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: 12px;
+}
+
+.drop-icon {
+  font-size: 2.3rem;
+}
+
+.drop strong {
+  display: block;
+  margin: 7px;
+}
+
+.drop small {
+  color: var(--muted);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.primary {
+  background: var(--leaf);
+  color: white;
+}
+
+.secondary {
+  background: #edf2e8;
+  color: var(--leaf);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.result {
+  display: none;
+  margin-top: 15px;
+  border-radius: 15px;
+  background: #eff5e8;
+  padding: 15px;
+}
+
+.result.show {
+  display: block;
+}
+
+.result h3 {
+  margin-top: 0;
+}
+
+.result p {
+  color: #496151;
+}
+
+.field {
+  margin-top: 13px;
+}
+
+label.field-label {
+  display: block;
+  font-weight: 750;
+  font-size: 0.9rem;
+  margin-bottom: 7px;
+}
+
+select {
+  width: 100%;
+  border: 1px solid #d7e0d1;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fffefb;
+  color: var(--ink);
+  font: inherit;
+}
+
+.suggestion {
+  margin-top: 14px;
+  background: #f2f5e9;
+  border-radius: 15px;
+  padding: 16px;
+}
+
+.suggestion strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.suggestion p {
+  margin: 0;
+  color: #536a59;
+}
+
+.note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.activities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.activity {
+  background: #f6f6ed;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.activity .emoji {
+  font-size: 1.7rem;
+}
+
+.activity h3 {
+  font-size: 1rem;
+  margin: 7px 0 4px;
+}
+
+.activity p {
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 8px;
+  background: #e4edd8;
+  color: var(--leaf);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+footer {
+  text-align: center;
+  padding: 28px 20px;
+  color: var(--muted);
+}
+
+footer strong {
+  color: var(--leaf);
+}
+
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: auto;
+  }
+
+  .activities {
+    grid-template-columns: 1fr;
+  }
+
+  .pill {
+    display: none;
+  }
+
+  .panel {
+    padding: 19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <span class="logo">✿</span>
+    touch grass
+  </div>
+  <span class="pill">OPEN-SOURCE AI · NATURE FIRST</span>
+</header>
+
+<main>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">Your little nature companion</div>
+
+    <h1>Less scrolling.<br>
+      <em>More exploring.</em>
+    </h1>
+
+    <p>
+      Use AI to learn about the world around you, then take that
+      curiosity outside. Identify something in nature, plan a garden,
+      or discover a mini outdoor adventure.
+    </p>
+  </div>
+
+  <div class="hero-art" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="hill"></div>
+    <div class="hill two"></div>
+    <div class="tree">🌳</div>
+    <div class="bird">🐦</div>
+  </div>
+</section>
+
+<div class="grid">
+
+<!-- FEATURE 1: AI IMAGE CLASSIFIER -->
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>Nature Lens</h2>
+      <p class="sub">Explore a photo from the natural world.</p>
+    </div>
+    <span class="number">01</span>
+  </div>
+
+  <label class="drop" id="drop" for="photo">
+    <div id="dropContent">
+      <div class="drop-icon">📷</div>
+      <strong>Choose a photo</strong>
+      <small>Bird, plant, flower, leaf or nature scene</small>
+    </div>
+  </label>
+
+  <input id="photo" type="file" accept="image/*">
+
+  <div class="actions">
+    <button class="btn primary" id="identify" disabled>
+      Identify with AI
+    </button>
+    <button class="btn secondary" id="clear">
+      Clear photo
+    </button>
+  </div>
+
+  <div class="status" id="aiStatus" aria-live="polite">
+    Choose a photo to get started.
+    The first AI use may download a model.
+  </div>
+
+  <div class="result" id="aiResult" aria-live="polite"></div>
+
+  <p class="note">
+    Uses an open-weight image classification model in your browser.
+    Results are predictions, not guaranteed identifications.
+  </p>
+</section>
+
+<!-- FEATURE 2: GARDEN PLANNER -->
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>Garden Buddy</h2>
+      <p class="sub">Find a beginner-friendly planting idea.</p>
+    </div>
+    <span class="number">02</span>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="place">Your general climate</label>
+    <select id="place">
+      <option value="mild">Mild / pleasant weather</option>
+      <option value="hot">Hot and sunny</option>
+      <option value="cool">Cool weather</option>
+      <option value="rainy">Rainy or humid</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="space">Where will you grow?</label>
+    <select id="space">
+      <option value="pots">Pots or balcony</option>
+      <option value="garden">Garden / open ground</option>
+      <option value="window">Sunny windowsill</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="interest">What would you like to grow?</label>
+    <select id="interest">
+      <option value="herbs">Easy herbs</option>
+      <option value="greens">Leafy greens</option>
+      <option value="flowers">Flowers for pollinators</option>
+      <option value="vegetables">Vegetables</option>
+    </select>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="gardenBtn">
+      Suggest a planting idea
+    </button>
+  </div>
+
+  <div class="suggestion" id="gardenResult">
+    <strong>Your garden idea will appear here 🌱</strong>
+    <p>Choose your conditions to get a suggestion.</p>
+  </div>
+
+  <p class="note">
+    Suggestions are general. Check local planting dates and growing
+    conditions before planting.
+  </p>
+</section>
+
+<!-- FEATURE 3: OUTDOOR ADVENTURE -->
+
+<section class="panel wide">
+  <div class="panel-head">
+    <div>
+      <h2>Go Outside Generator</h2>
+      <p class="sub">Turn free time into a little adventure.</p>
+    </div>
+    <span class="number">03</span>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="time">
+      How much time do you have?
+    </label>
+    <select id="time">
+      <option value="10">10 minutes</option>
+      <option value="20">20 minutes</option>
+      <option value="30">30 minutes</option>
+      <option value="60">1 hour</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="mood">What sounds good?</label>
+    <select id="mood">
+      <option value="calm">Something calm</option>
+      <option value="curious">Explore and learn</option>
+      <option value="move">Move my body</option>
+      <option value="creative">Be creative</option>
+    </select>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" id="adventureBtn">
+      Give me an outdoor mission
+    </button>
+  </div>
+
+  <div class="suggestion" id="adventureResult">
+    <strong>Your mission is waiting 🍃</strong>
+    <p>Choose your time and mood to get started.</p>
+  </div>
+</section>
+
+<!-- FEATURE 4: OPEN AI EXPLANATION -->
+
+<section class="panel wide">
+  <div class="panel-head">
+    <div>
+      <h2>Why Open AI?</h2>
+      <p class="sub">The idea behind this project.</p>
+    </div>
+    <span class="number">04</span>
+  </div>
+
+  <div class="activities">
+    <div class="activity">
+      <div class="emoji">📵</div>
+      <h3>On-device AI</h3>
+      <p>
+        The image model runs in your browser after its files download.
+        The first load requires internet.
+      </p>
+      <span class="tag">OFFLINE POTENTIAL</span>
+    </div>
+
+    <div class="activity">
+      <div class="emoji">🔐</div>
+      <h3>More privacy</h3>
+      <p>
+        This demo processes your selected image in the browser rather
+        than uploading it to a custom application server.
+      </p>
+      <span class="tag">PRIVACY-MINDED</span>
+    </div>
+
+    <div class="activity">
+      <div class="emoji">🧩</div>
+      <h3>Customizable</h3>
+      <p>
+        Open model ecosystems allow experimentation with different
+        models, subject to each model's licence.
+      </p>
+      <span class="tag">OPEN INNOVATION</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  Made for <strong>Hacktoberfest · Touch Grass</strong>
+  — build with curiosity, then go outside. 🌿
+</footer>
+
+<script type="module">
+
+// ==========================================
+// FEATURE 1: OPEN-WEIGHT AI IMAGE CLASSIFIER
+// ==========================================
+
+const photoInput = document.getElementById("photo");
+const drop = document.getElementById("drop");
+const dropContent = document.getElementById("dropContent");
+const identifyBtn = document.getElementById("identify");
+const aiStatus = document.getElementById("aiStatus");
+const aiResult = document.getElementById("aiResult");
+
+let selectedFile = null;
+let previewUrl = null;
+let classifier = null;
+let loadingModel = null;
+
+function setPhoto(file) {
+  if (!file || !file.type.startsWith("image/")) {
+    aiStatus.textContent = "Please choose a valid image file.";
+    return;
+  }
+
+  selectedFile = file;
+
+  if (previewUrl) {
+    URL.revokeObjectURL(previewUrl);
+  }
+
+  previewUrl = URL.createObjectURL(file);
+
+  dropContent.innerHTML = "";
+
+  const img = document.createElement("img");
+  img.src = previewUrl;
+  img.alt = "Selected nature photo preview";
+
+  dropContent.appendChild(img);
+
+  identifyBtn.disabled = false;
+  aiStatus.textContent = 'Photo ready. Click "Identify with AI".';
+  aiResult.classList.remove("show");
+}
+
+photoInput.addEventListener("change", event => {
+  setPhoto(event.target.files[0]);
+});
+
+drop.addEventListener("dragover", event => {
+  event.preventDefault();
+  drop.classList.add("drag");
+});
+
+drop.addEventListener("dragleave", () => {
+  drop.classList.remove("drag");
+});
+
+drop.addEventListener("drop", event => {
+  event.preventDefault();
+  drop.classList.remove("drag");
+  setPhoto(event.dataTransfer.files[0]);
+});
+
+document.getElementById("clear").addEventListener("click", () => {
+  selectedFile = null;
+  photoInput.value = "";
+
+  if (previewUrl) {
+    URL.revokeObjectURL(previewUrl);
+  }
+
+  previewUrl = null;
+
+  dropContent.innerHTML = `
+    <div class="drop-icon">📷</div>
+    <strong>Choose a photo</strong>
+    <small>Bird, plant, flower, leaf or nature scene</small>
+  `;
+
+  identifyBtn.disabled = true;
+  aiStatus.textContent = "Choose a photo to get started.";
+  aiResult.classList.remove("show");
+});
+
+identifyBtn.addEventListener("click", async () => {
+  if (!selectedFile) return;
+
+  identifyBtn.disabled = true;
+  aiResult.classList.remove("show");
+
+  try {
+    aiStatus.textContent =
+      "Loading the open AI model. The first download may take a while.";
+
+    if (!loadingModel) {
+      loadingModel = (async () => {
+        const { pipeline, env } = await import(
+          "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"
+        );
+
+        env.allowLocalModels = false;
+
+        return await pipeline(
+          "image-classification",
+          "Xenova/vit-base-patch16-224"
+        );
+      })();
+    }
+
+    classifier = classifier || await loadingModel;
+
+    aiStatus.textContent = "AI is analysing your photo...";
+
+    const results = await classifier(previewUrl, { topk: 5 });
+
+    const cleanLabel = label =>
+      label.replace(/_/g, " ").replace(/\b\w/g, char =>
+        char.toUpperCase()
+      );
+
+    const top = results[0];
+
+    aiResult.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "AI's best guess: " + cleanLabel(top.label);
+
+    const confidence = document.createElement("p");
+    confidence.textContent =
+      "Model score: " + (top.score * 100).toFixed(1) + "%";
+
+    const alternatives = document.createElement("p");
+    alternatives.textContent =
+      "Other possibilities: " +
+      results.slice(1, 4).map(item => cleanLabel(item.label)).join(", ");
+
+    const warning = document.createElement("p");
+    warning.textContent =
+      "Next step: Compare this result with a trusted nature guide. " +
+      "Never touch or eat an unknown plant or mushroom based only on AI.";
+
+    aiResult.append(heading, confidence, alternatives, warning);
+    aiResult.classList.add("show");
+
+    aiStatus.textContent =
+      "Done! This general image classifier may not identify every bird or plant correctly.";
+
+  } catch (error) {
+    aiStatus.textContent =
+      "The AI model could not load. Check your internet connection and try again. " +
+      (error?.message || "");
+
+  } finally {
+    identifyBtn.disabled = !selectedFile;
+  }
+});
+
+
+// ==========================================
+// FEATURE 2: GARDEN BUDDY
+// ==========================================
+
+const gardenIdeas = {
+  herbs: {
+    mild: "Try mint or parsley in a pot with bright light. Keep soil slightly moist.",
+    hot: "Try basil with morning sun and some protection from harsh afternoon heat.",
+    cool: "Parsley or chives may be suitable for a cool, bright spot.",
+    rainy: "Try mint in a pot with good drainage. Humid weather needs good airflow."
+  },
+
+  greens: {
+    mild: "Consider spinach or lettuce when local temperatures suit them.",
+    hot: "Look for heat-tolerant leafy greens suitable for your region.",
+    cool: "Spinach can be a useful cool-season option where locally suitable.",
+    rainy: "Try a well-drained container and a locally suitable leafy green."
+  },
+
+  flowers: {
+    mild: "Try locally native flowering plants that support bees and butterflies.",
+    hot: "Choose native, heat-tolerant flowers suited to your area.",
+    cool: "Look for seasonal flowers that provide nectar or pollen.",
+    rainy: "Choose locally native flowers that tolerate your region's rainfall."
+  },
+
+  vegetables: {
+    mild: "Try one beginner-friendly vegetable suitable for your current season.",
+    hot: "Choose a heat-tolerant vegetable recommended for your local season.",
+    cool: "Explore cool-season vegetables recommended for your region.",
+    rainy: "Choose a locally suitable vegetable and ensure good soil drainage."
+  }
+};
+
+document.getElementById("gardenBtn").addEventListener("click", () => {
+  const climate = document.getElementById("place").value;
+  const space = document.getElementById("space").value;
+  const interest = document.getElementById("interest").value;
+
+  const idea = gardenIdeas[interest][climate];
+
+  const spaceNames = {
+    pots: "pots or balcony",
+    garden: "open garden",
+    window: "sunny windowsill"
+  };
+
+  const result = document.getElementById("gardenResult");
+  result.replaceChildren();
+
+  const heading = document.createElement("strong");
+  heading.textContent = "🌱 Your garden idea";
+
+  const description = document.createElement("p");
+  description.textContent = idea;
+
+  const setup = document.createElement("p");
+  setup.style.marginTop = "8px";
+  setup.textContent =
+    "Setup: Start small in your " + spaceNames[space] +
+    ". Ensure drainage and check local growing advice.";
+
+  result.append(heading, description, setup);
+});
+
+
+// ==========================================
+// FEATURE 3: OUTDOOR ADVENTURE GENERATOR
+// ==========================================
+
+const missions = {
+  calm: [
+    [
+      "Sit and notice",
+      "Find a safe outdoor spot. Notice five sounds, four colours, " +
+      "and three different textures."
+    ],
+    [
+      "Cloud pause",
+      "Look at the sky and observe the clouds. Leave your phone in your pocket."
+    ]
+  ],
+
+  curious: [
+    [
+      "Tiny nature detective",
+      "Observe a leaf, bird, or insect from a safe distance. Look it up when you get home."
+    ],
+    [
+      "Three new things",
+      "Find three things outside that you had never noticed before."
+    ]
+  ],
+
+  move: [
+    [
+      "Mini walking loop",
+      "Take a comfortable walk on a safe, familiar route. Leave enough time to return."
+    ],
+    [
+      "Stretch outdoors",
+      "Find a safe, level spot for gentle stretches, then take a comfortable walk."
+    ]
+  ],
+
+  creative: [
+    [
+      "Nature colour hunt",
+      "Find five colours in nature. Sketch them later or create a colour palette."
+    ],
+    [
+      "Leaf-shape sketch",
+      "Observe a fallen leaf without picking living plants. Sketch its outline and veins."
+    ]
+  ]
+};
+
+document.getElementById("adventureBtn").addEventListener("click", () => {
+  const minutes = Number(document.getElementById("time").value);
+  const mood = document.getElementById("mood").value;
+
+  const options = missions[mood];
+  const mission = options[Math.floor(Math.random() * options.length)];
+
+  const result = document.getElementById("adventureResult");
+  result.replaceChildren();
+
+  const heading = document.createElement("strong");
+  heading.textContent =
+    "🍃 Your " + minutes + "-minute mission: " + mission[0];
+
+  const description = document.createElement("p");
+  description.textContent = mission[1];
+
+  const safety = document.createElement("p");
+  safety.style.marginTop = "8px";
+  safety.textContent =
+    "Safety first: Stay somewhere familiar and safe, watch traffic " +
+    "and weather, and do not touch unknown plants or wildlife.";
+
+  result.append(heading, description, safety);
+});
+
+</script>
+
+</body>
+</html>
